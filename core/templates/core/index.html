@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transaction Receipt</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            background-color: #ffe0b2; /* Shallow orange */
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            max-width: 400px;
+            margin: auto;
+        }
+        h1 {
+            font-size: 20px;
+            color: #333;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .details, .info, .additional {
+            margin: 15px 0;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #fafafa;
+        }
+        strong {
+            color: #333;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Transaction Receipt</h1>
+    <div class="details">
+        <strong>Payment:</strong> {{ receipt.payment }} {{ receipt.currency }}<br>
+        <strong>Made By:</strong> {{ receipt.made_by }}<br>
+        <strong>Account Number:</strong> Payescrоm.com. The payment has been processed successfully through PaxEscrowPay.<br>
+        <strong>Transaction Status:</strong> {{ receipt.status }}
+    </div>
+    
+    <div class="info">
+        <strong>Receiver's Information:</strong><br>
+        <strong>Receiver's Name:</strong> {{ receipt.receiver_name }}<br>
+        <strong>Account Number:</strong> {{ receipt.account_number }}<br>
+        <strong>Amount:</strong> {{ receipt.amount }} {{ receipt.currency }}
+    </div>
+    
+    <div class="additional">
+        <strong>Additional Information:</strong><br>
+        <strong>Reference Number:</strong> MABG<br>
+        <strong>Reason For Payment:</strong> {{ receipt.reason_for_payment }}<br>
+        <strong>Action Required:</strong> The payment is currently on hold. The receiver must either transfer the payment funds to the sender or contact the transfer initiator to cancel the transaction.
+    </div>
+    
+    <button onclick="proceed()">Proceed</button>
+</div>
+
+<script>
+        function proceed() {
+            window.location.href = "{% url 'index2' %}";  // Use Django's URL template tag
+        }
+    </script>
+
+</body>
+</html>
