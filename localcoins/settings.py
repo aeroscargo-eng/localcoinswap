@@ -10,7 +10,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # =========================
 SECRET_KEY = 'your-secret-key-here'  # CHANGE THIS IN PRODUCTION
 DEBUG = True  # Set to False in production
-ALLOWED_HOSTS = []  # Add your server IP or domain
+ALLOWED_HOSTS = ["localcoinswap-1.onrender.com"]  # Add your server IP or domain
 
 
 # =========================
