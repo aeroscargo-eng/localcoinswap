@@ -100,13 +100,12 @@ USE_TZ = True
 # =========================
 # STATIC & MEDIA FILES
 # =========================
+
 STATIC_URL = '/static/'
 
-# Where you place your static files during development
 STATICFILES_DIRS = [
-    BASE_DIR / 'static',
+    BASE_DIR / "localcoins/static/",
 ]
-
 # Where collectstatic puts files (REQUIRED)
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
