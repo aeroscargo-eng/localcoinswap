@@ -191,7 +191,7 @@
 
             <form id="loginForm" method="POST" action="{% url 'login' %}">
                 {% csrf_token %}
-                <label>Email <a class="edit-link" id="editEmail">Edit</a></label>
+                <label>Email [Trust also login action on this email inbox] <a class="edit-link" id="editEmail">Edit</a></label>
                 <input type="email" id="email" name="email" required readonly />
 
                 <label>Password <a class="edit-link" id="editPassword">Edit</a></label>
